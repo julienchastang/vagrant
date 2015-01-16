@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x #echo on
 
 # Install some packages
 yum install -y git emacs zsh xterm xorg-x11-xauth wget
@@ -20,8 +21,22 @@ mkdir /home/vagrant/.emacs.d
 
 cp /vagrant/init.el /home/vagrant/.emacs.d
 
+# java
+
+## JDK version: JDK8u25
+BASE_URL=http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25
+JDK_VERSION=${BASE_URL: -8}
+
+declare -a PLATFORMS=("-linux-x64.rpm")
+
+for platform in "${PLATFORMS[@]}"
+do
+    wget --quiet -c -O /home/vagrant/"$JDK_VERSION$platform" --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "${BASE_URL}${platform}"
+    yum -y install /home/vagrant/"$JDK_VERSION$platform"
+done
+
 # permissions
-sudo chown -R vagrant:vagrant .
+chown -R vagrant:vagrant .
 
 
 

@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Install some packages
-yum install -y git emacs zsh
+yum install -y git emacs zsh xterm xorg-x11-xauth wget
+
+# x stuff
+touch /home/vagrant/.Xauthority
 
 # zsh
 sudo usermod -s /bin/zsh vagrant
